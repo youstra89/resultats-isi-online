@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="description" content="Vous pouvez désormais voir vos résultats d'examen en ligne sur le site de l'Institut des Sciences Islamiques">
         <title>Résultats d'examen ISI Première session 2018-2019</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
     </head>
@@ -17,7 +18,7 @@
             <a class="item" href="agboville.php">
               <i class="grid layout icon"></i> Agboville
             </a>
-            
+
             <div class="right item">
               <div class="ui simple dropdown item">
               Plus
@@ -30,7 +31,7 @@
             </div>
           </div>
         </div>
-        
+
         <br>
         <div class="ui container">
             <div class="ui raised very padded text segment center">
@@ -39,8 +40,8 @@
               <p>Sinon, si vous êtes à Agboville, cilquez plutôt sur Agboville dans le menu principal.</p>
             </div>
         </div>
-        
-        
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
     </body>
