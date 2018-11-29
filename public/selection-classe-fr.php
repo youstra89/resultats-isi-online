@@ -1,6 +1,9 @@
 <?php
     require('connexion.inc.php');
-    //include "connexion.inc.php";
+    $lang = empty($_GET['lang']) ? 'fr' : $_GET['lang'];
+    $city = $_GET['city'];
+    if($city != 0 && $city != 1)
+      echo "<script>document.location.replace('index-".$lang.".php');</script>";
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,31 +13,31 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
     </head>
     <body>
-        <div class="ui attached large stackable menu">
-          <div class="ui container">
-            <a class="item" href="index.php">
-              <i class="home icon"></i> Accueil
-            </a>
-            <a class="item" href="abidjan.php">
-              <i class="grid layout icon"></i> Abidjan
-            </a>
-            <a class="item" href="agboville.php">
-              <i class="grid layout icon"></i> Agboville
-            </a>
-            
-            <div class="right item">
-              <div class="ui simple dropdown item">
-              Plus
+      <div class="ui attached large stackable menu">
+        <div class="ui container">
+          <a class="item" href="index-<?php echo $lang; ?>.php">
+            <i class="home icon"></i> Accueil
+          </a>
+          <a class="item" href="selection-classe-<?php echo $lang; ?>.php?lang=<?php echo $lang; ?>&city=0">
+            <i class="grid layout icon"></i> Abidjan
+          </a>
+          <a class="item" href="selection-classe-<?php echo $lang; ?>.php?lang=<?php echo $lang; ?>&city=1">
+            <i class="grid layout icon"></i> Agboville
+          </a>
+
+          <div class="right item">
+            <div class="ui simple dropdown item">
+            Changer langue
               <i class="dropdown icon"></i>
               <div class="menu">
-                <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                <a class="item"><i class="globe icon"></i> Choose Language</a>
+                <a class="item" href="selection-classe-fr.php?lang=fr&city=<?php echo $city; ?>"><i class="globe icon"></i> Français</a>
+                <a class="item" href="selection-classe-ar.php?lang=ar&city=<?php echo $city; ?>"><i class="globe icon"></i> العربية</a>
               </div>
-            </div>
             </div>
           </div>
         </div>
-        
+      </div>
+
         <br>
         <div class="ui container">
             <div class="ui red message" style="z-index: 1; position: fixed; display: none;" width="100%">
@@ -44,10 +47,12 @@
             </div>
         </div>
         <div class="ui container" style="position: relative; z-index: 0;">
-            
+
             <div class="ui raised very padded text segment">
                 <center>
-                    <h2 class="ui center header" style="font-size: 4rem; color: teal">Institut des Sciences Islamiques <br>ABIDJAN</h2>
+                    <h2 class="ui center header" style="font-size: 4rem; color: teal">
+                      Institut des Sciences Islamiques <br><?php echo $city == 0 ? 'ABIDJAN' : 'AGBOVILLE'; ?>
+                    </h2>
                 </center>
             </div>
             <div class="ui raised very padded text segment">
@@ -59,7 +64,7 @@
                         if(!empty($_POST['classe']))
                         {
                             //echo "<script>alert('".$_POST['classe']."');</script>";
-                            echo "<script>document.location.replace('saisie-matricule.php?classe=".$_POST['classe']."');</script>";
+                            echo "<script>document.location.replace('saisie-matricule-".$lang.".php?lang=".$lang."&city=".$city."&classe=".$_POST['classe']."');</script>";
                         }
                     }
                 ?>

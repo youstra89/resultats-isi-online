@@ -1,18 +1,21 @@
 <?php
     require('connexion.inc.php');
-    //include "connexion.inc.php";
+    $lang = empty($_GET['lang']) ? 'fr' : $_GET['lang'];
+    $city = $_GET['city'];
+    if($city != 0 && $city != 1)
+    echo "<script>document.location.replace('index-".$lang.".php');</script>";
     $fq       = $_GET['fq'];
     $eleveId  = $_GET['eleve'];
     $classeId = $_GET['classe'];
     if(empty($fq) || empty($eleveId) || empty($classeId))
     {
         echo "<script>alert('Vous n\'avez pas saisies toutes les informations demandées.".$fq." ".$eleveId." ".$classeId."');</script>";
-        echo "<script>document.location.replace('index.php');</script>";
+        echo "<script>document.location.replace('index-".$lang.".php');</script>";
     }
     elseif(!is_numeric($fq) || !is_numeric($eleveId) || !is_numeric($classeId))
     {
         echo "<script>alert('Les données saisies sont erronées!');</script>";
-        echo "<script>document.location.replace('index.php');</script>";
+        echo "<script>document.location.replace('index-".$lang.".php');</script>";
     }
     else {
         $sql = "SELECT id, annee_scolaire_id, eleve_id, classe_id, redouble FROM frequenter WHERE id = :id AND eleve_id = :eleve AND classe_id = :classe AND annee_scolaire_id = :annee";
@@ -23,7 +26,7 @@
         if(empty($frequenter))
         {
             echo "<script>alert('Veuillez suivre la procédure normale et saisir toutes les informations demandées.');</script>";
-            echo "<script>document.location.replace('index.php');</script>";
+            echo "<script>document.location.replace('index-".$lang.".php');</script>";
         }
     }
 ?>
@@ -31,34 +34,34 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Résultats d'examen ISI Première session 2018-2019</title>
+        <title>نتائج الامتحان بالمركز الفترة الأولى 2018-2019</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
     </head>
     <body>
-        <div class="ui attached large stackable menu">
-          <div class="ui container">
-            <a class="item" href="index.php">
-              <i class="home icon"></i> Accueil
-            </a>
-            <a class="item" href="abidjan.php">
-              <i class="grid layout icon"></i> Abidjan
-            </a>
-            <a class="item" href="agboville.php">
-              <i class="grid layout icon"></i> Agboville
-            </a>
+      <div class="ui attached large stackable menu">
+        <div class="ui container">
+          <a class="item" href="index-<?php echo $lang; ?>.php">
+            <i class="home icon"></i> الاستقبال
+          </a>
+          <a class="item" href="selection-classe-<?php echo $lang; ?>.php?lang=<?php echo $lang; ?>&city=0">
+            <i class="grid layout icon"></i> أبيدجان
+          </a>
+          <a class="item" href="selection-classe-<?php echo $lang; ?>.php?lang=<?php echo $lang; ?>&city=1">
+            <i class="grid layout icon"></i> أغبوفيل
+          </a>
 
-            <div class="right item">
-              <div class="ui simple dropdown item">
-              Plus
+          <div class="right item">
+            <div class="ui simple dropdown item">
+            تغيير اللغة
               <i class="dropdown icon"></i>
               <div class="menu">
-                <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                <a class="item"><i class="globe icon"></i> Choose Language</a>
+                <a class="item" href="resulats-session-1-2018-2019-fr.php?lang=fr&city=<?php echo $city; ?>&eleve=<?php echo $eleveId; ?>&classe=<?php echo $classeId; ?>&fq=<?php echo $fq; ?>"><i class="globe icon"></i> Français</a>
+                <a class="item" href="resulats-session-1-2018-2019-ar.php?lang=ar&city=<?php echo $city; ?>&eleve=<?php echo $eleveId; ?>&classe=<?php echo $classeId; ?>&fq=<?php echo $fq; ?>"><i class="globe icon"></i> العربية</a>
               </div>
-            </div>
             </div>
           </div>
         </div>
+      </div>
 
         <br>
         <?php
@@ -71,14 +74,16 @@
 
             <div class="ui raised very padded text segment">
                 <center>
-                    <h2 class="ui center header" style="font-size: 4rem; color: teal">Institut des Sciences Islamiques <br>ABIDJAN</h2>
+                  <h2 class="ui center header" style="font-size: 4rem; color: teal">
+                    مركز العلوم الإسلامية <br>
+                    <?php echo $city == 0 ? 'أبيدجان' : 'أغبوفيل'; ?>
+                  </h2>
                 </center>
             </div>
             <div class="ui raised very padded text segment">
-                <h2 class="ui center header">Votre résultat</h2>
+                <h2 class="ui center header">النتيجة</h2>
                 <br>
                 <?php
-                    echo $eleve[2]." ".$eleve[3];
                     echo "<div class=\"ui olive segment\"><h3>Matricule :</h3><span class=\"info-eleve\">".$eleve[1]."</span></div>";
                     echo "<div class=\"ui olive segment\"><h3>الاسم و اللقب :</h3><span class=\"info-eleve\">".$eleve[4]." ".$eleve[3]."</span></div>";
                     echo "<div class=\"ui green segment\"><h3>Nom & Prénom: </h3><span class=\"info-eleve\">".$eleve[5]." ".$eleve[6]."</span></div>";
@@ -106,9 +111,9 @@
                 <table class="ui celled striped table">
                     <thead>
                         <tr>
-                            <th>Matière</th>
-                            <th>Note</th>
-                            <th>Appréciation</th>
+                            <th>مادة</th>
+                            <th>الدرجة</th>
+                            <th>التقدير</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,7 +136,7 @@
                 <table class="ui very basic table">
                     <thead>
                         <tr>
-                            <th colspan="3" style="font-size: 3rem">Moyenne et classement</th>
+                            <th colspan="3" style="font-size: 3rem">المعدل والترتيب</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -146,7 +151,7 @@
                 </table>
                 <br><br><br>
                 <center>
-                    <a href="" class="ui massive teal button"><i class="print icon"></i> Imprimer son bulletin</a>
+                    <a href="" class="ui massive teal button"><i class="print icon"></i> طباعة كشف الدرجات</a>
                 </center>
             </div>
         </div>

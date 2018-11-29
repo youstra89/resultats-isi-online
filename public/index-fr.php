@@ -1,3 +1,6 @@
+<?php
+  $lang = empty($_GET['lang']) ? 'fr' : $_GET['lang'];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,29 +12,28 @@
     <body>
         <div class="ui attached large stackable menu">
           <div class="ui container">
-            <a class="item" href="index.php">
+            <a class="item" href="index-<?php echo $lang; ?>.php">
               <i class="home icon"></i> Accueil
             </a>
-            <a class="item" href="abidjan.php">
+            <a class="item" href="selection-classe-<?php echo $lang; ?>.php?lang=<?php echo $lang; ?>&city=0">
               <i class="grid layout icon"></i> Abidjan
             </a>
-            <a class="item" href="agboville.php">
+            <a class="item" href="selection-classe-<?php echo $lang; ?>.php?lang=<?php echo $lang; ?>&city=1">
               <i class="grid layout icon"></i> Agboville
             </a>
 
             <div class="right item">
               <div class="ui simple dropdown item">
-              Plus
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                <a class="item"><i class="globe icon"></i> Choose Language</a>
+              Changer langue
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  <a class="item" href="index-fr.php"><i class="globe icon"></i> Français</a>
+                  <a class="item" href="index-ar.php"><i class="globe icon"></i> العربية</a>
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
-
         <br>
         <div class="ui container">
             <div class="ui raised very padded text segment center">
